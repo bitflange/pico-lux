@@ -33,11 +33,18 @@ def start():
         if request.method == 'GET':
             # should return status for led chain
             print("HTTP GET : /api/v1/led")
-            pass
         elif request.method == 'POST':
             # should change status for led chain
+            '''
+                payload:
+                {'r': int, 'g': int, 'b': int, 'w'=0: int, 'brightness'=-1: int}
+            '''
+            defaults = {'r': 0, 'g': 0, 'b': 0, 'w': 0, 'brightness': -1}
+            payload = defaults
+            payload.update(request.args)
+            p.sfill(payload)
             print("HTTP POST: /api/v1/led")
-            pass
+            return payload
 
     @app.route('/api/v1/led/<int:id>', methods=['GET', 'POST'])
     def light_config(request, id):
@@ -48,8 +55,7 @@ def start():
         elif request.method == 'POST':
             # should set status for one led
             print(f"HTTP POST: /api/v1/led/{id}")
-            pass50
-    
+            pass
     
     def do_light_cycle():
         global breathe
